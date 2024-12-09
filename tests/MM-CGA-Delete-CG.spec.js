@@ -15,7 +15,8 @@ test('Delete CG which was created by form', async ({ page }) => {
     //Caregiver list navigation
     await page.goto('https://beta.mamamia.app/caregiver-agency/caregivers/all');
     await page.waitForLoadState('networkidle')
-    const search_bar = page.getByPlaceholder('Search')
+    // const search_bar = page.getByPlaceholder('Search')
+    const search_bar = page.locator('[data-pc-name="inputtext"]')
     await search_bar.fill('Test Automation')
     const caregiverExists = await page.locator('text="Test Automation"').count();
     if (caregiverExists === 0) {
