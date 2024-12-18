@@ -135,7 +135,7 @@ test.describe('Multistep registration form', () => {
 
         // Step-3 - Third selection
         const randomPhone = generateRandomNineDigits()
-        await page.locator('#input_2_22').fill(randomPhone)
+        await page.locator('#input_2_22_raw').fill(randomPhone)
 
         // Step-3 - Fourth selection
         const randomDate = getRandomDate()
@@ -160,10 +160,6 @@ test.describe('Multistep registration form', () => {
         await registerButton.click();
 
         // Validate registration
-        await expect(page).toHaveURL('https://beta.mamamia.app/caregiver/jobs');
-
-
-
-
+        await page.waitForURL('https://beta.mamamia.app/caregiver/jobs');
     });
 });
