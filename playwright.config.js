@@ -25,8 +25,8 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
     headless: true,
+    trace: 'on-first-retry',
 
     /* HTTP credentials for Basic Auth */
     httpCredentials: {
@@ -48,7 +48,8 @@ module.exports = defineConfig({
       name: 'beta',
       use: { 
         baseURL: 'https://beta.mamamia.app/login', // npx playwright test --project=beta
-        ...devices['Desktop Chrome'], 
+        ...devices['Desktop Chrome'],
+        headless: true, 
       },
     },
     {

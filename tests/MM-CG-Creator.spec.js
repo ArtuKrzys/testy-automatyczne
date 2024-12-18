@@ -43,7 +43,7 @@ test.describe('Multistep registration form', () => {
 
         // Go to next step
         await page.locator('#gform_next_button_2_1').click();
-        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/#gf_2');
+        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/');
 
         // Click back button
         await page.waitForLoadState('networkidle')
@@ -63,7 +63,7 @@ test.describe('Multistep registration form', () => {
 
         // Go to next step
         await page.locator('#gform_next_button_2_1').click();
-        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/#gf_2');
+        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/');
 
         // Step 2 - First selection
         await page.locator('//*[@id="field_2_12"]/div/div/div[1]/div/div').click() 
@@ -98,13 +98,13 @@ test.describe('Multistep registration form', () => {
         await expect(page.locator(`#choices--input_2_17-item-choice-${step_2_sixth_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 7 - seventhh selection
-        await page.locator('//*[@id="field_2_18"]/div/div/div[1]/div/div').click()
+        await page.locator('//*[@id="field_2_18"]/div/div/div[1]/div/div').click() 
         const step_2_seventh_Choice = await selectRandomChoice(page, '2_18', 5);
         await expect(page.locator(`#choices--input_2_18-item-choice-${step_2_seventh_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Go to next step
         await page.locator('#gform_next_button_2_19').click();
-        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/#gf_2');
+        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/');
         await expect(page.locator('#field_2_28')).toHaveText('Dostęp do systemu')
 
          // Click back button
@@ -124,7 +124,7 @@ test.describe('Multistep registration form', () => {
 
         // Go to next step
         await page.locator('#gform_next_button_2_19').click();
-        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/#gf_2');
+        await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/');
         await expect(page.locator('#field_2_28')).toHaveText('Dostęp do systemu')
 
         // Step-3 - First selection
@@ -152,10 +152,18 @@ test.describe('Multistep registration form', () => {
         // Step-3 - Click next button
         await page.locator('#gform_submit_button_2').click()
 
-    });
+        // Set up user password
+        const passwordInput = page.locator('input[name="password"]')
+        await passwordInput.fill('Password123')
+        // Click register
+        const registerButton = page.getByText('Zarejestruj się');
+        await registerButton.click();
 
-    // Warto dodać więcej scenariuszy testowych
-    // test('validate required fields', async ({ page }) => {
-        // TODO: Implementacja testu walidacji
-    // });
+        // Validate registration
+        await expect(page).toHaveURL('https://beta.mamamia.app/caregiver/jobs');
+
+
+
+
+    });
 });

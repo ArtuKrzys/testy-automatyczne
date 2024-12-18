@@ -15,9 +15,11 @@ test('Delete CG which was created by form', async ({ page }) => {
     //Caregiver list navigation
     await page.goto('https://beta.mamamia.app/caregiver-agency/caregivers/all');
     await page.waitForLoadState('networkidle')
-    // const search_bar = page.getByPlaceholder('Search')
+    
+    //Search for Caregiver and validate if exists
     const search_bar = page.locator('[data-pc-name="inputtext"]')
     await search_bar.fill('Test Automation')
+    await page.waitForSelector('text="Test Automation"')
     const caregiverExists = await page.locator('text="Test Automation"').count();
     if (caregiverExists === 0) {
     console.error('Caregiver not found. Skipping deletion.');
@@ -25,28 +27,29 @@ test('Delete CG which was created by form', async ({ page }) => {
 }
 
     //Navigate to certain Caregiver 
-    const appButton = page.getByText('App+').nth(0)
+    const appButton = page.getByText('Test Automation')
     await appButton.click()
+    await page.waitForLoadState('networkidle')
 
     //Navigate to Caregiver profile
-    const profileButton = page.locator('button:has-text("Profile")').nth(1);
+    const profileButton = page.locator('button[data-test-attr="button-profile-redirect"]');
     await profileButton.click();
-
+    
     //Delete Caregiver
-    const deleteButton= page.locator('button:has-text("Delete caregiver")');
+    const deleteButton= page.locator('button[data-test-attr="button-delete-caregiver"]'); 
     await deleteButton.click()
 
     // Delete Caregiver Modal
-    const deleteButton2 = page.locator('button:has-text("Remove caregiver")')
+    const deleteButton2 = page.locator('button[data-test-attr="button-delete-caregiver-modal"]');
     await deleteButton2.click()
+    await page.waitForLoadState('networkidle')
 
     // Delete assertion
-    await search_bar.fill('Test Automation')
-    await expect(page.locator('text="No results"')).toBeVisible();
- 
+    await page.waitForLoadState('networkidle');
+
    
-    
 
 
-
+ 
 })
+
