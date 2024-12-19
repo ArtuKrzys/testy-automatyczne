@@ -7,8 +7,10 @@ const users = [
   { email: 'customer@customer.pl', password: 'test', url: '**/customer/caregivers' }
 ];
 
-for (const user of users) {
-  test(`login for ${user.email}`, async ({ page }) => {
-    await login(page, user.email, user.password, user.url);
-  });
-}
+test.describe('Login for all roles', () => {
+  for (const user of users) {
+    test(`login for ${user.email}`, async ({ page }) => {
+      await login(page, user.email, user.password, user.url);
+    });
+  }
+});
