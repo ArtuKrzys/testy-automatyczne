@@ -10,14 +10,14 @@ const user = {
 test('Job count check', async ({ page }) => {
   await login(page, user.email, user.password, user.url);
 
-  const locator = page.getByRole('link', { name: /Oferty|Offers|Angebote/i });
-  await locator.click();
+  const offersButton = page.getByRole('link', { name: /Oferty|Offers|Angebote/i });
+  await offersButton.click();
   await page.waitForURL(/\/caregiver-agency\/job-market/); 
 
-  const locator2 = page.locator('div', { hasText: /^[1-9][0-9]*\s*(Oferty pracy|open jobs|Jobs)$/ });
-  await locator2.waitFor();
+  const numberOfOffers = page.locator('div', { hasText: /^[1-9][0-9]*\s*(Oferty pracy|open jobs|Jobs)$/ });
+  await numberOfOffers.waitFor();
 
-  const text = await locator2.textContent();
+  const text = await numberOfOffers.textContent();
   console.log(`Extracted job count text: "${text}"`);
 
   const match = text?.match(/\d+/);
