@@ -44,12 +44,12 @@ test.describe.serial('Sequential Tests', () => {
   test('Test 2 - Dashboard SA', async ({ page }) => {
     await login(page, userSa.email, userSa.password, userSa.url);
     await page.waitForLoadState('networkidle');
-    const row = page.locator('a.table-row', { hasText: 'Janina T.' });
+    const row = page.locator('a.table-row', { hasText: 'Janina T.' }); //FIXME Szymon prośba o zmianę na caregivra docelowego
     await expect(row).toBeVisible(); // Ensure the row is visible
 
     // Find the status of the caregiver
-    const status = row.locator('[data-test-attr="badge-status__match"]'); // Szymon prośba o zmianę tutaj na __like
-    await expect(status).toHaveText('Match'); //Ensure the status is 'Match' - prośba o zmianę na 'Like' czy tam Caregiver intrest
+    const status = row.locator('[data-test-attr="badge-status__match"]'); // FIXME Szymon prośba o zmianę tutaj na __like
+    await expect(status).toHaveText('Match'); //Ensure the status is 'Match' - FIXME Szymon prośba o zmianę na 'Like' czy tam Caregiver intrest
 
     console.log('Caregiver Janina T. has status Match.');
 
