@@ -75,7 +75,7 @@ test.describe.serial('Sequential Tests', () => {
     await login(page, userSa.email, userSa.password, userSa.url);
     await page.waitForLoadState('networkidle');
     //negative assertion
-    const row = page.locator('a.table-row', { hasText: 'Janina T.' });
+    const row = page.locator('a.table-row', { hasText: 'Janina T.' }); // Tutaj szymon prośba o zmianę na docelowego caregivra
     await expect(row).not.toBeVisible(); // Ensure the row is not visible
 
   });
