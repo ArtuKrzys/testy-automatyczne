@@ -56,6 +56,11 @@ test.describe.serial('Sequential Tests', () => {
 
     console.log('Caregiver Janina T. has status Match.');
 
+    const menuButton = page.locator('#headlessui-menu-button-1');
+    await menuButton.click();
+    const logoutButton = page.locator('[data-test-attr="button-header-logout"]')
+    await logoutButton.click();
+    await expect(page).toHaveURL('https://beta.mamamia.app/login');
 
   });
 });
