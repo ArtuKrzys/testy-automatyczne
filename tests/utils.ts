@@ -62,6 +62,32 @@ function generateRandomNineDigits() {
     return phoneNumber;
 }
 
+/**
+ * 
+ * @returns {string}
+ */
+function generateRandomName(): string {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+    const name = Array.from({ length: Math.floor(Math.random() * 5) + 3 }) 
+        .map(() => alphabet[Math.floor(Math.random() * 26) + 26])
+        .join('');
+    const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
+
+    return `${capitalizedName}`;
+}
+
+async function login(page, email, password, expectedUrl) {
+    await page.goto('/login');
+    await page.fill('input[name="email"]', email);
+    await page.fill('input[name="password"]', password);
+    const button = page.locator('text=Login');
+    await button.click();
+    if (expectedUrl !== undefined) {
+        await page.waitForURL(expectedUrl);
+    }    
+  }
+
 
 
 // Eksport funkcji
@@ -69,4 +95,6 @@ module.exports = {
     selectRandomChoice,
     getRandomDate,
     generateRandomNineDigits,
+    generateRandomName,
+    login,
 };

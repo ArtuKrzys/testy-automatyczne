@@ -40,14 +40,14 @@ module.exports = defineConfig({
     {
       name: 'dev',
       use: { 
-        baseURL: 'https://dev.mamamia.app/login', // npx playwright test --project=dev
+        baseURL: 'https://dev.mamamia.app', // npx playwright test --project=dev
         ...devices['Desktop Chrome'], 
       },
     },
     {
       name: 'beta',
       use: { 
-        baseURL: 'https://beta.mamamia.app/login', // npx playwright test --project=beta
+        baseURL: 'https://beta.mamamia.app', // npx playwright test --project=beta
         ...devices['Desktop Chrome'],
         headless: true, 
       },
@@ -55,7 +55,7 @@ module.exports = defineConfig({
     {
       name: 'prod',
       use: { 
-        baseURL: 'https://portal.mamamia.app/login', // npx playwright test --project=prod
+        baseURL: 'https://portal.mamamia.app', // npx playwright test --project=prod
         ...devices['Desktop Chrome'], 
       },
     },
