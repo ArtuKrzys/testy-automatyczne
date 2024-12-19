@@ -10,20 +10,18 @@ const user = {
 test('Job count check', async ({ page }) => {
   await login(page, user.email, user.password, user.url);
 
-  const offersButton = page.getByRole('link', { name: /Oferty|Offers|Angebote/i });
+  const offersButton = page.locator('a[href="/caregiver-agency/job-market"]');
+  await expect(offersButton).toBeVisible();
   await offersButton.click();
   await page.waitForURL(/\/caregiver-agency\/job-market/); 
 
-  const numberOfOffers = page.locator('div', { hasText: /^[1-9][0-9]*\s*(Oferty pracy|open jobs|Jobs)$/ });
-  await numberOfOffers.waitFor();
+  const numberOfOffers = page.locator('[data-test-attr="number-job-market-total"]');
+  await page.waitForLoadState('networkidle');
+  await expect(numberOfOffers).toBeVisible();
 
-  const text = await numberOfOffers.textContent();
-  console.log(`Extracted job count text: "${text}"`);
+  const text = await numberOfOffers.innerText();
+  const number = parseInt(text, 10);
 
-  const match = text?.match(/\d+/);
-  expect(match).not.toBeNull(); // Ensure we found a number
-
-  const number = parseInt(match[0], 10);
   console.log(`Job count: ${number}`);
   expect(number).toBeGreaterThan(0);
 });
