@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { login } from './utils';
 
 const userCg = {
-  email: 'cg@cg.pl', 
+  email: 'test@automatyczny.pl', 
   password: 'test', 
   url: '**/caregiver/jobs'
 };
@@ -15,6 +15,8 @@ const userSa = {
   url: '**/service-agency/dashboard'
 };
 
+const backendURL = 'https://backend.beta.mamamia.app';
+
 test.describe.serial('Sequential Tests', () => {
   test('Test 1 - Caregiver like', async ({ page }) => {
     await login(page, userCg.email, userCg.password, userCg.url);
@@ -26,32 +28,31 @@ test.describe.serial('Sequential Tests', () => {
     
     await page.getByText('Więcej szczegółów').first().click();
     await page.getByRole('button', { name: 'Pasuje mi' }).click();
-    await page.waitForTimeout(2000);
-    page.on('response', async response => {
-      if (response.url() === 'https://backend.beta.mamamia.app/graphql') {
-        const responseData = await response.json();
-        // Zakładamy, że `id` znajduje się w obiekcie odpowiedzi
-        responseId = responseData.data?.StoreInterest?.id;
-        if (responseId) {
-          console.log('ID found in response:', responseId);
-        }
-      }
-    });
-    // await expect(page.getByText('Idealne dopasowanie').isVisible());
+
+    const response = await page.waitForResponse(response =>
+      response.url() === backendURL + '/graphql' &&
+      response.request().postData()?.includes('StoreInterest')
+    );
+    
+    expect(response).not.toBeNull();
+
+    const responseBody = await response.json();
+    responseId = responseBody.data?.StoreInterest.id; 
+
+    expect(responseId).not.toBeUndefined();
+    expect(Number.isInteger(responseId)).toBe(true);
 
   });
 
   test('Test 2 - Dashboard SA', async ({ page }) => {
     await login(page, userSa.email, userSa.password, userSa.url);
     await page.waitForLoadState('networkidle');
-    const row = page.locator('a.table-row', { hasText: 'Janina T.' }); //FIXME Szymon prośba o zmianę na caregivra docelowego
+    const row = page.locator('a.table-row', { hasText: 'Nieusuwac T.' }); 
     await expect(row).toBeVisible(); // Ensure the row is visible
 
     // Find the status of the caregiver
-    const status = row.locator('[data-test-attr="badge-status__match"]'); // FIXME Szymon prośba o zmianę tutaj na __like
-    await expect(status).toHaveText('Match'); //Ensure the status is 'Match' - FIXME Szymon prośba o zmianę na 'Like' czy tam Caregiver intrest
-
-    console.log('Caregiver Janina T. has status Match.');
+    const status = row.locator('[data-test-attr="badge-status__caregiver_interest"]'); 
+    await expect(status).toHaveText('Caregiver interest'); 
 
     const menuButton = page.locator('#headlessui-menu-button-1');
     await menuButton.click();
@@ -67,6 +68,12 @@ test.describe.serial('Sequential Tests', () => {
     await page.getByText('pasuje mi').first().click();
     await page.getByText('Więcej szczegółów').first().click();
     await page.getByRole('button', { name: 'Pasuje mi' }).click();
+    const request = await page.waitForRequest(request => 
+      request.url() === backendURL +  '/graphql' && 
+      request.postData()?.includes('DestroyInterest')
+    );
+  
+    expect(request).not.toBeNull()
 
   });
 
@@ -75,7 +82,7 @@ test.describe.serial('Sequential Tests', () => {
     await login(page, userSa.email, userSa.password, userSa.url);
     await page.waitForLoadState('networkidle');
     //negative assertion
-    const row = page.locator('a.table-row', { hasText: 'Janina T.' }); // Tutaj szymon prośba o zmianę na docelowego caregivra
+    const row = page.locator('a.table-row', { hasText: 'Nieusuwac T.' });
     await expect(row).not.toBeVisible(); // Ensure the row is not visible
 
   });
