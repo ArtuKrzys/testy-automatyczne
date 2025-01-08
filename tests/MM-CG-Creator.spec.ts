@@ -66,39 +66,40 @@ test.describe('Multistep registration form', () => {
         await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/');
 
         // Step 2 - First selection
-        await page.locator('//*[@id="field_2_12"]/div/div/div[1]/div/div').click() 
+        await page.locator('#field_2_12').click() 
         const step_2_first_Choice = await selectRandomChoice(page, '2_12', 2);
         await expect(page.locator(`#choices--input_2_12-item-choice-${step_2_first_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 2 - Second selection
-        
+        // await page.locator('#field_2_29').click()
         const step_2_second_Choice = await selectRandomChoice(page, '2_29', 43);
         await page.waitForTimeout(1000)
         await expect(page.locator(`#choices--input_2_29-item-choice-${step_2_second_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 3 - third selection
-        await page.locator('//*[@id="field_2_14"]/div/div/div[1]/div/div').click()
+        await page.locator('#field_2_14').click()
         const step_2_third_Choice = await selectRandomChoice(page, '2_14', 4);
         await expect(page.locator(`#choices--input_2_14-item-choice-${step_2_third_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 4 - fourth selection
-        await page.locator('//*[@id="field_2_15"]/div/div/div[1]/div/div').click()
+        await page.locator('#field_2_15').click()
         const step_2_fourth_Choice = await selectRandomChoice(page, '2_15', 2);
         await expect(page.locator(`#choices--input_2_15-item-choice-${step_2_fourth_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 5 - fifth selection
-        await page.locator('//*[@id="field_2_16"]/div/div/div[1]/div/div').click()
+        await page.locator('#field_2_16').click()
         const step_2_fifth_Choice = await selectRandomChoice(page, '2_16', 2);
         await expect(page.locator(`#choices--input_2_16-item-choice-${step_2_fifth_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 6 - sixth selection
-        await page.locator('//*[@id="field_2_17"]/div/div/div[1]/div/div').click()
-        await page.locator('//*[@id="field_2_17"]/div/div/div[1]/div/div').click()
+        await page.locator('#field_2_17').click()
+        await page.locator('#field_2_17').click()
+        // await page.locator('//*[@id="field_2_17"]/div/div/div[1]/div/div').click()
         const step_2_sixth_Choice = await selectRandomChoice(page, '2_17', 33);
         await expect(page.locator(`#choices--input_2_17-item-choice-${step_2_sixth_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
         // Step 7 - seventhh selection
-        await page.locator('//*[@id="field_2_18"]/div/div/div[1]/div/div').click() 
+        await page.locator('#field_2_18').click() 
         const step_2_seventh_Choice = await selectRandomChoice(page, '2_18', 5);
         await expect(page.locator(`#choices--input_2_18-item-choice-${step_2_seventh_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
@@ -142,7 +143,7 @@ test.describe('Multistep registration form', () => {
         await page.locator('#input_2_34').fill(randomDate)
 
         // Step-3 - Fifth selection
-        await page.locator('//*[@id="field_2_23"]/div/div/div[1]/div/div').click()
+        await page.locator('#field_2_23').click()
         const step_3_fifth_Choice = await selectRandomChoice(page, '2_23', 2);
         await expect(page.locator(`#choices--input_2_23-item-choice-${step_3_fifth_Choice}`)).toHaveAttribute('aria-selected', 'true');
 
