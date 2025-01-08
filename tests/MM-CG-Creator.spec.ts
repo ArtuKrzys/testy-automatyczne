@@ -135,7 +135,7 @@ test.describe('Multistep registration form', () => {
 
         // Step-3 - Third selection
         const randomPhone = generateRandomNineDigits()
-        await page.locator('#input_2_22_raw').fill(randomPhone)
+        await page.locator('[data-test-attr="phone"]').fill(randomPhone)
 
         // Step-3 - Fourth selection
         const randomDate = getRandomDate()
