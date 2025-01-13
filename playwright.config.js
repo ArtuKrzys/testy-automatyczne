@@ -37,13 +37,13 @@ module.exports = defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'dev',
-      use: { 
-        baseURL: 'https://dev.mamamia.app', // npx playwright test --project=dev
-        ...devices['Desktop Chrome'], 
-      },
-    },
+    // {
+    //   name: 'dev',
+    //   use: { 
+    //     baseURL: 'https://dev.mamamia.app', // npx playwright test --project=dev
+    //     ...devices['Desktop Chrome'], 
+    //   },
+    // },
     {
       name: 'beta',
       use: { 

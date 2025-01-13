@@ -66,6 +66,7 @@ test.describe('Multistep registration form', () => {
         await expect(page).toHaveURL('https://vitanas.wwwclient.pl/rejestracja-samemu/');
 
         // Step 2 - First selection
+        await page.waitForLoadState('networkidle')
         await page.locator('#field_2_12').click() 
         const step_2_first_Choice = await selectRandomChoice(page, '2_12', 2);
         await expect(page.locator(`#choices--input_2_12-item-choice-${step_2_first_Choice}`)).toHaveAttribute('aria-selected', 'true');
